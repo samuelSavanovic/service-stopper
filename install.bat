@@ -1,0 +1,1 @@
+copy serviceStopper.exe "C:\Program Files (x86)\Service Stopper\serviceStopper.exe"

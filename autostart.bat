@@ -1,0 +1,1 @@
+schtasks /create /sc onlogon /tn ServiceStopper /rl highest /tr "C:\Program Files (x86)\Service Stopper\serviceStopper.exe"
