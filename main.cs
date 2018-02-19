@@ -18,7 +18,13 @@ namespace ServiceStopper
             
            stopServices();
         }
-
+        void stopCurrentService(ServiceController sc) {
+            if(sc.Status == ServiceControllerStatus.Running) {
+                sc.Stop();
+                sc.WaitForStatus(ServiceControllerStatus.Stopped);
+                sw.WriteLine("{0}, {1}", sc.DisplayName, sc.Status.ToString());
+            }
+        }
         void stopServices () {
             
             while (true) {
@@ -27,25 +33,16 @@ namespace ServiceStopper
                 foreach (ServiceController sc in scServices)
                 {
                     if (sc.DisplayName == "Windows Update") {
-                        if(sc.Status == ServiceControllerStatus.Running) {
-                            sc.Stop();
-                            sc.WaitForStatus(ServiceControllerStatus.Stopped);
-                            sw.WriteLine("{0}, {1}", sc.DisplayName, sc.Status.ToString());
-                        }
+                        stopCurrentService(sc);
                     }
                     if (sc.DisplayName == "Background Intelligent Transfer Service") {
-                        if(sc.Status == ServiceControllerStatus.Running) {
-                            sc.Stop();
-                            sc.WaitForStatus(ServiceControllerStatus.Stopped);
-                            sw.WriteLine("{0}, {1}", sc.DisplayName, sc.Status.ToString());
-                        }
+                        stopCurrentService(sc);
                     }
                     if (sc.DisplayName == "Delivery Optimization") {
-                        if(sc.Status == ServiceControllerStatus.Running) {
-                            sc.Stop();
-                            sc.WaitForStatus(ServiceControllerStatus.Stopped);
-                           sw.WriteLine("{0}, {1}", sc.DisplayName, sc.Status.ToString());
-                        }
+                        stopCurrentService(sc);
+                    }
+                    if (sc.DisplayName == "Update Orchestrator Service") {
+                        stopCurrentService(sc);
                     }
                 }
                 scServices = null;
